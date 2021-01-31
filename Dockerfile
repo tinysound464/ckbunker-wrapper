@@ -8,3 +8,6 @@ RUN apk update && apk add --no-cache gcc g++ libffi-dev zlib-dev autoconf automa
 
 RUN pip install -r requirements.txt && \
     pip install --editable .
+
+ENTRYPOINT ["ckbunker"]
+CMD ["run"]
