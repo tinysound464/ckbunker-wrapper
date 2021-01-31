@@ -1,13 +1,35 @@
 FROM python:3-alpine
 
-WORKDIR /app
+RUN apk update
 
+RUN apk add --no-cache autoconf
+RUN apk add --no-cache automake
+RUN apk add --no-cache eudev-dev
+RUN apk add --no-cache g++
+RUN apk add --no-cache gcc
+RUN apk add --no-cache glib-dev
+RUN apk add --no-cache jpeg-dev
+RUN apk add --no-cache libffi-dev
+RUN apk add --no-cache libgudev-dev
+RUN apk add --no-cache libtool
+RUN apk add --no-cache libusb-dev
+RUN apk add --no-cache linux-headers
+RUN apk add --no-cache make
+RUN apk add --no-cache musl-dev
+RUN apk add --no-cache tor
+RUN apk add --no-cache udev
+RUN apk add --no-cache vala
+RUN apk add --no-cache zlib-dev
+
+WORKDIR /
+RUN git clone https://github.com/Coldcard/ckbunker.git
+WORKDIR ckbunker
 COPY . .
-
-RUN apk update && apk add --no-cache gcc g++ libffi-dev zlib-dev autoconf automake libtool gcc musl-dev glib-dev eudev-dev libgudev-dev make vala linux-headers udev libusb-dev jpeg-dev
 
 RUN pip install -r requirements.txt && \
     pip install --editable .
+
+EXPOSE 9823
 
 ENTRYPOINT ["ckbunker"]
 CMD ["run"]
